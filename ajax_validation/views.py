@@ -29,10 +29,18 @@ def validate(request, *args, **kwargs):
                 html_id = form.fields[key].widget.attrs.get('id') or form[key].auto_id
                 html_id = form.fields[key].widget.id_for_label(html_id)
                 final_errors[html_id] = val
-        data = {
-            'valid': False,
-            'errors': final_errors,
-        }
+        if final_errors:
+            data = {
+                'valid': False,
+                'errors': final_errors,
+            }
+        else:
+            """
+            The case where Filefields errors occured
+            """
+            data = {
+                'valid': True
+            }
     json_serializer = LazyEncoder()
     return HttpResponse(json_serializer.encode(data), mimetype='application/json')
 validate = require_POST(validate)
