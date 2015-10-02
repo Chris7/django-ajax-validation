@@ -42,5 +42,5 @@ def validate(request, *args, **kwargs):
                 'valid': True
             }
     json_serializer = LazyEncoder()
-    return HttpResponse(json_serializer.encode(data), mimetype='application/json')
+    return HttpResponse(json_serializer.encode(data), content_type='application/json')
 validate = require_POST(validate)
